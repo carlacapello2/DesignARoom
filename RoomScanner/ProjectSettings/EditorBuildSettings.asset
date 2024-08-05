@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RoomScanner.unity
     guid: 80a94c47de7d4f548aee76ee77a12fc0
   m_configObjects:
-    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 1995f46b3cf9a2f479a28f8e33c96e58,
       type: 2}
-    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 0465d33c6aee55f44b0237db8b0e0259,
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: a010c86316da8274ba7b75f305145ec1,
       type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c199e683398494f32b4cde18e73ab731,
       type: 2}

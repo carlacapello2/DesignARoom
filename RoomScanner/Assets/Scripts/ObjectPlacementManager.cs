@@ -34,8 +34,24 @@ public class ObjectPlacementManager : MonoBehaviour
                 if (arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
                 {
                     var hitPose = hits[0].pose;
-                    Instantiate(selectedObject, hitPose.position, hitPose.rotation);
-                    selectedObject = null; // Deselect the object after placing it
+
+
+                    // Recupera il piano su cui è avvenuto il raycast
+                    var plane = arPlaneManager.GetPlane(hits[0].trackableId);
+                    if (plane != null)
+                    {
+                        var planeNormal = plane.normal;
+
+                        // Calcola la direzione opposta alla normale del piano
+                        var forward = planeNormal;
+                        forward.y = 0; // Mantieni l'oggetto allineato orizzontalmente
+
+                        var rotation = Quaternion.LookRotation(forward, Vector3.up);
+
+                        Instantiate(selectedObject, hitPose.position, rotation);
+
+                        selectedObject = null; // Deseleziona l'oggetto dopo averlo posizionato
+                    }
                 }
             }
         }
@@ -69,6 +85,11 @@ public class ObjectPlacementManager : MonoBehaviour
         if (index >= 0 && index < objectPrefabs.Count)
         {
             selectedObject = objectPrefabs[index];
+            Debug.Log($"Selected object: {selectedObject.name}");
+        }
+        else
+        {
+            Debug.LogError("Invalid object index");
         }
     }
 }
