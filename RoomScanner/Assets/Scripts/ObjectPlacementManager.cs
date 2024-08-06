@@ -50,7 +50,6 @@ public class ObjectPlacementManager : MonoBehaviour
 
                         GameObject placedObject = Instantiate(selectedObject, hitPose.position, rotation);
                         placedObject.tag = "PlacedObject";
-                        placedObject.AddComponent<BoxCollider>();
 
                         selectedObject = null; // Deseleziona l'oggetto dopo averlo posizionato
                     }
