@@ -48,7 +48,9 @@ public class ObjectPlacementManager : MonoBehaviour
 
                         var rotation = Quaternion.LookRotation(forward, Vector3.up);
 
-                        Instantiate(selectedObject, hitPose.position, rotation);
+                        GameObject placedObject = Instantiate(selectedObject, hitPose.position, rotation);
+                        placedObject.tag = "PlacedObject";
+                        placedObject.AddComponent<BoxCollider>();
 
                         selectedObject = null; // Deseleziona l'oggetto dopo averlo posizionato
                     }
