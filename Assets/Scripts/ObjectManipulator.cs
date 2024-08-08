@@ -14,6 +14,7 @@ public class ObjectManipulator : MonoBehaviour
     private Quaternion initialRotation;
     private Vector3 initialPosition;
     private float initialAngle;
+    private bool canSelectObjects = true;
 
     public GameObject deleteIcon; // Riferimento all'icona di eliminazione
     public GameObject screenIcon, containerObj; // Riferimenti agli altri oggetti
@@ -23,7 +24,7 @@ public class ObjectManipulator : MonoBehaviour
     void Start()
     {
         arCamera = Camera.main;
-        deleteIcon.SetActive(false); // Assicurati che l'icona di eliminazione sia inizialmente disattivata
+        deleteIcon.SetActive(false);
 
         // Aggiungi Event Trigger all'icona di eliminazione
         EventTrigger trigger = deleteIcon.GetComponent<EventTrigger>();
@@ -56,7 +57,7 @@ public class ObjectManipulator : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.CompareTag("PlacedObject"))
+                if (canSelectObjects && hit.transform.CompareTag("PlacedObject"))
                 {
                     SelectObject(hit.transform.gameObject);
                 }
@@ -116,9 +117,9 @@ public class ObjectManipulator : MonoBehaviour
             renderer.material.color = new Color(0.015f, 0.678f, 0.619f); // Cambia colore a #04ad9e
         }
 
-        deleteIcon.SetActive(true); // Mostra l'icona di eliminazione
-        screenIcon.SetActive(false); // Nascondi screenIcon
-        containerObj.SetActive(false); // Nascondi containerObj
+        deleteIcon.SetActive(true);
+        screenIcon.SetActive(false); 
+        containerObj.SetActive(false); 
     }
 
     private void DeselectObject()
@@ -208,5 +209,17 @@ public class ObjectManipulator : MonoBehaviour
         EventTrigger.Entry entry = new EventTrigger.Entry { eventID = eventType };
         entry.callback.AddListener(new UnityEngine.Events.UnityAction<BaseEventData>(callback));
         trigger.triggers.Add(entry);
+    }
+
+    public void EnableObjectSelection()
+    {
+        canSelectObjects = true;
+        Debug.Log("Object selection enabled");
+    }
+
+    public void DisableObjectSelection()
+    {
+        canSelectObjects = false;
+        Debug.Log("Object selection disabled");
     }
 }

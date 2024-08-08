@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ObjectPlacementManager : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class ObjectPlacementManager : MonoBehaviour
     private Vector2 touchPosition;
     public GameObject objectIcon, XROrigin;
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
-    private List<GameObject> objectButtons = new List<GameObject>();
     private bool buttonsVisible = false;
 
     void Start()
@@ -24,39 +24,61 @@ public class ObjectPlacementManager : MonoBehaviour
 
     void Update()
     {
-        if (selectedObject != null && Input.touchCount > 0)
+        Debug.Log("Update method called");
+
+        if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             touchPosition = touch.position;
 
             if (touch.phase == TouchPhase.Began)
             {
+                Debug.Log("Touch phase began");
+
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    Debug.Log("Touch over UI element");
+                    return;
+                }
+
                 if (arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
                 {
+                    Debug.Log("Raycast hit a plane");
                     var hitPose = hits[0].pose;
+                    var hitObject = hits[0].trackable as ARPlane;
 
-
-                    // Recupera il piano su cui è avvenuto il raycast
-                    var plane = arPlaneManager.GetPlane(hits[0].trackableId);
-                    if (plane != null)
+                    if (hitObject != null && selectedObject != null)
                     {
-                        var planeNormal = plane.normal;
+                        var plane = arPlaneManager.GetPlane(hits[0].trackableId);
+                        if (plane != null)
+                        {
+                            var planeNormal = plane.normal;
 
-                        // Calcola la direzione opposta alla normale del piano
-                        var forward = planeNormal;
-                        forward.y = 0; // Mantieni l'oggetto allineato orizzontalmente
+                            // Calcola la direzione opposta alla normale del piano
+                            var forward = planeNormal;
+                            forward.y = 0; // Mantieni l'oggetto allineato orizzontalmente
 
-                        var rotation = Quaternion.LookRotation(forward, Vector3.up);
+                            var rotation = Quaternion.LookRotation(forward, Vector3.up);
 
-                        GameObject placedObject = Instantiate(selectedObject, hitPose.position, rotation);
-                        placedObject.tag = "PlacedObject";
-
-                        selectedObject = null; // Deseleziona l'oggetto dopo averlo posizionato
+                            GameObject placedObject = Instantiate(selectedObject, hitPose.position, rotation);
+                            placedObject.tag = "PlacedObject";
+                            selectedObject = null;
+                        }
+                    }
+                }
+                else if (touch.phase == TouchPhase.Moved && selectedObject != null)
+                {
+                    Debug.Log("Touch phase moved");
+                    if (arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
+                    {
+                        var hitPose = hits[0].pose;
+                        selectedObject.transform.position = hitPose.position;
                     }
                 }
             }
         }
     }
+
 
     void ActivateObjectIcon()
     {
@@ -64,7 +86,7 @@ public class ObjectPlacementManager : MonoBehaviour
         mainButton.onClick.AddListener(ToggleColorButtons);
     }
 
-    public void buttonVisibleChanger()
+    public void ButtonVisibleChanger()
     {
         if (buttonsVisible)
         {
@@ -93,4 +115,6 @@ public class ObjectPlacementManager : MonoBehaviour
             Debug.LogError("Invalid object index");
         }
     }
+
+
 }
