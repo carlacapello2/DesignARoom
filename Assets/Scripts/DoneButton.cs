@@ -6,9 +6,8 @@ using System.Collections.Generic;
 public class DoneButton : MonoBehaviour
 {
     public ARPlaneManager planeManager;
-    public GameObject iconPrefab; // Prefab dell'icona
-    public Canvas canvas; // Riferimento alla Canvas
-    public Button doneButton; // Riferimento al Button Done
+    public Canvas canvas;
+    public Button doneButton;
     public GameObject designScreen;
 
     void Start()
@@ -24,8 +23,8 @@ public class DoneButton : MonoBehaviour
 
     void OnPlanesChanged(ARPlanesChangedEventArgs args)
     {
-        // Aggiorna la visibilità dell'icona in base alla presenza dei trackable solo se il pulsante Done è stato premuto
-        if (designScreen.activeSelf)
+   
+        if (designScreen.activeSelf) //se la schermata di design è attiva può rimanerlo solo se il numero di trackables è meggiore di zero
         {
             designScreen.SetActive(planeManager.trackables.count > 0);
         }

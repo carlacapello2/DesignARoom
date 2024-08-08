@@ -138,21 +138,20 @@ public class ObjectManipulator : MonoBehaviour
         }
         selectedObject = null;
 
-        deleteIcon.SetActive(false); // Nascondi l'icona di eliminazione
-        screenIcon.SetActive(true); // Mostra screenIcon
-        containerObj.SetActive(true); // Mostra containerObj
+        deleteIcon.SetActive(false);
+        screenIcon.SetActive(true);
+        containerObj.SetActive(true);
     }
 
     private void DeleteSelectedObject()
     {
         if (selectedObject != null)
         {
-            Debug.Log("Deleting selected object.");
             Destroy(selectedObject);
             selectedObject = null;
-            deleteIcon.SetActive(false); // Nascondi l'icona di eliminazione
-            screenIcon.SetActive(true); // Mostra screenIcon
-            containerObj.SetActive(true); // Mostra containerObj
+            deleteIcon.SetActive(false);
+            screenIcon.SetActive(true);
+            containerObj.SetActive(true);
         }
     }
 
@@ -180,7 +179,7 @@ public class ObjectManipulator : MonoBehaviour
         selectedObject.transform.rotation = initialRotation * Quaternion.Euler(0, angleDelta, 0);
     }
 
-    private float CalculateAngleBetweenTouches(Touch touchZero, Touch touchOne)
+    private float CalculateAngleBetweenTouches(Touch touchZero, Touch touchOne)//l'angolo viene calcolato per distinguere tra i due tocchi dello scalamento e della rotazione
     {
         Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
         Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
@@ -200,7 +199,6 @@ public class ObjectManipulator : MonoBehaviour
 
     public void OnDeleteIconClicked(BaseEventData data)
     {
-        Debug.Log("DeleteIcon clicked, attempting to delete.");
         DeleteSelectedObject();
     }
 
@@ -211,7 +209,7 @@ public class ObjectManipulator : MonoBehaviour
         trigger.triggers.Add(entry);
     }
 
-    public void EnableObjectSelection()
+    public void EnableObjectSelection() //quando si attivano alcune schermate bisogna disattivare la possibilità di selezionare gli oggetti
     {
         canSelectObjects = true;
         Debug.Log("Object selection enabled");

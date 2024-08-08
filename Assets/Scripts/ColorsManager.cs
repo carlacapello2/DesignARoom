@@ -36,7 +36,7 @@ public class ColorsManager : MonoBehaviour
                 if (changeMaterialButton != null)
                 {
                     changeMaterialButton.SetPlaneManager(planeManager);
-                    colorButtons.Add(changeMaterialButton);
+                    colorButtons.Add(changeMaterialButton);//aggiunge alla lista di bottoni tutti gli oggetti figli dell'icona color
                 }
             }
         }
@@ -47,12 +47,12 @@ public class ColorsManager : MonoBehaviour
     {
         foreach (var button in colorButtons)
         {
-            button.gameObject.SetActive(!button.gameObject.activeSelf); // Attiva/disattiva i pulsanti figli
+            button.gameObject.SetActive(!button.gameObject.activeSelf); // Attiva/disattiva i pulsanti figli al tocco sull'icona color
             plusIcon.gameObject.SetActive(button.gameObject.activeSelf);
         }
     }
 
-    public void toggleActivation()
+    public void toggleActivation() //metodo pubblico che serve a disattivare e attivare i bottoni colors alla pressione di altri elementi UI
     {
         foreach (var button in colorButtons)
         {

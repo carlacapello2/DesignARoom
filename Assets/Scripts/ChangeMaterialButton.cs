@@ -9,7 +9,7 @@ public class ChangeMaterialButton : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Button>().onClick.AddListener(ChangeAllPlanesMaterial);
+        GetComponent<Button>().onClick.AddListener(ChangeAllPlanesMaterial); //aggiunge un listener al pulsante. Al click chiama il metodo ChangeAllPlanesMaterial
     }
 
     public void SetPlaneManager(ARPlaneManager manager)
@@ -25,7 +25,7 @@ public class ChangeMaterialButton : MonoBehaviour
         {
             if (plane.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
             {
-                // Assicurati che il piano abbia un componente Renderer
+                
                 Renderer planeRenderer = plane.GetComponent<Renderer>();
                 if (planeRenderer != null)
                 {

@@ -24,8 +24,6 @@ public class ObjectPlacementManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Update method called");
-
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -33,7 +31,6 @@ public class ObjectPlacementManager : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                Debug.Log("Touch phase began");
 
                 if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 {
@@ -43,7 +40,6 @@ public class ObjectPlacementManager : MonoBehaviour
 
                 if (arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
                 {
-                    Debug.Log("Raycast hit a plane");
                     var hitPose = hits[0].pose;
                     var hitObject = hits[0].trackable as ARPlane;
 
@@ -60,7 +56,7 @@ public class ObjectPlacementManager : MonoBehaviour
 
                             var rotation = Quaternion.LookRotation(forward, Vector3.up);
 
-                            GameObject placedObject = Instantiate(selectedObject, hitPose.position, rotation);
+                            GameObject placedObject = Instantiate(selectedObject, hitPose.position, rotation); //istanziazione dell'oggetto nel punto selezionato
                             placedObject.tag = "PlacedObject";
                             selectedObject = null;
                         }
@@ -68,7 +64,6 @@ public class ObjectPlacementManager : MonoBehaviour
                 }
                 else if (touch.phase == TouchPhase.Moved && selectedObject != null)
                 {
-                    Debug.Log("Touch phase moved");
                     if (arRaycastManager.Raycast(touchPosition, hits, TrackableType.PlaneWithinPolygon))
                     {
                         var hitPose = hits[0].pose;
@@ -80,13 +75,13 @@ public class ObjectPlacementManager : MonoBehaviour
     }
 
 
-    void ActivateObjectIcon()
+    void ActivateObjectIcon()//alla pressione del pulsante padre si attivano tutti i pulsanti oggetto
     {
         Button mainButton = objectIcon.GetComponent<Button>();
         mainButton.onClick.AddListener(ToggleColorButtons);
     }
 
-    public void ButtonVisibleChanger()
+    public void ButtonVisibleChanger()//metodo pubblico che consente di disattivare i bottoni degli oggetti
     {
         if (buttonsVisible)
         {
@@ -103,12 +98,11 @@ public class ObjectPlacementManager : MonoBehaviour
         }
     }
 
-    public void SelectObject(int index)
+    public void SelectObject(int index) //selezione degli oggetti
     {
         if (index >= 0 && index < objectPrefabs.Count)
         {
             selectedObject = objectPrefabs[index];
-            Debug.Log($"Selected object: {selectedObject.name}");
         }
         else
         {

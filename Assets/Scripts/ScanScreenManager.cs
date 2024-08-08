@@ -26,7 +26,7 @@ public class ScanScreenManager : MonoBehaviour
     {
         bool areaChanged = false;
 
-        // Check for changes in updated planes
+        //Controlla se ci sono variazione nei piani
         foreach (var plane in args.updated)
         {
             if (plane.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
@@ -45,7 +45,7 @@ public class ScanScreenManager : MonoBehaviour
             }
         }
 
-        // Handle newly added planes
+        
         foreach (var plane in args.added)
         {
             if (plane.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
@@ -56,7 +56,7 @@ public class ScanScreenManager : MonoBehaviour
             }
         }
 
-        // Handle removed planes
+        
         foreach (var plane in args.removed)
         {
             previousPlaneAreas.Remove(plane);

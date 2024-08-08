@@ -1068,7 +1068,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -414, y: -709}
+  m_AnchoredPosition: {x: -366, y: -709}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &467395579
@@ -6336,8 +6336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeManager: {fileID: 1249923351}
-  iconPrefab: {fileID: 3657888198014155970, guid: 6813cbdf57bcbd74e87bcfd7b1044d09,
-    type: 3}
   canvas: {fileID: 409068463}
   doneButton: {fileID: 1450685844}
   designScreen: {fileID: 423065358}
